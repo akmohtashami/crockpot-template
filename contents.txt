@@ -2,6 +2,8 @@
 intersection.cpp	Line intersection
 ConvexHull3D.cpp	Convex hull 3D
 PointsInsidePolygon.txt	Number of integer points inside polygon
+halfplane.cpp	Half plane
+point-in-circle.cpp	Is this point in circle of other 3 points?
 
 [Graph]
 edmonds.cpp Maximum matching - Edmond's blossom
