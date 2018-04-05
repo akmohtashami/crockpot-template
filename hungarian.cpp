@@ -1,3 +1,18 @@
+/*
+  GETS:
+  n->number of vertices in each part
+  cost[i][j]->weight of edge between i,j
+  (vertices in each part are 0..n-1)
+
+  GIVES:
+  output of hungarian() is the maximum weighted matching
+  xy[v] is matched pair of v if v is in X
+  and yx[v] is matched pair of v if v is in Y
+  (-1 if there isn't a matched pair)
+
+  O(n^3)
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
