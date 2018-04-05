@@ -1,8 +1,8 @@
 /*
   GETS:
-  V->number of vertices
-  E->number of edges
-  pair of vertices as edges (vertices are 0..V-1)
+  n->number of vertices
+  you should use add_edge(u,v) and
+  add pair of vertices as edges (vertices are 0..n-1)
 
   GIVES:
   output of edmonds() is the maximum matching in general graph
@@ -19,7 +19,7 @@ typedef struct_edge* edge;
 const int MAXN=500;
 struct_edge pool[MAXN*MAXN*2];
 edge top=pool,adj[MAXN];
-int V,E,match[MAXN],qh,qt,q[MAXN],father[MAXN],base[MAXN];
+int n,match[MAXN],qh,qt,q[MAXN],father[MAXN],base[MAXN];
 bool inq[MAXN],inb[MAXN],ed[MAXN][MAXN];
 
 void add_edge(int u,int v)
@@ -65,7 +65,7 @@ void blossom_contraction(int s,int u,int v)
     father[u]=v;
   if (base[v]!=lca)
     father[v]=u;
-  for (int u=0;u<V;u++)
+  for (int u=0;u<n;u++)
     if (inb[base[u]])
       {
 	base[u]=lca;
@@ -78,7 +78,7 @@ int find_augmenting_path(int s)
 {
   memset(inq,0,sizeof(inq));
   memset(father,-1,sizeof(father));
-  for (int i=0;i<V;i++) base[i]=i;
+  for (int i=0;i<n;i++) base[i]=i;
   inq[q[qh=qt=0]=s]=true;
   while (qh<=qt)
     {
@@ -122,7 +122,7 @@ int edmonds()
 {
   int matchc=0;
   memset(match,-1,sizeof(match));
-  for (int u=0;u<V;u++)
+  for (int u=0;u<n;u++)
     if (match[u]==-1)
       matchc+=augment_path(u,find_augmenting_path(u));
   return matchc;
