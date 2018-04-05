@@ -19,14 +19,14 @@ struct PalindromicTree
 		tree[sz++] = node();
 		tree[sz++] = node();
 		tree[0].len = -1;
-		suf = 0;
+		suf = 1;
 		s = "";
 	}
 	bool add_letter(int c)
 	{
 		int pos = s.size();
 		s += char(c);
-		while (pos - tree[suf].len - 1 >= 0 && s[pos] != s[pos - tree[suf].len - 1])
+		while (pos - tree[suf].len - 1 < 0 || s[pos] != s[pos - tree[suf].len - 1])
 			suf = tree[suf].link;
 		if (tree[suf].to[c] != -1)
 		{
@@ -36,18 +36,18 @@ struct PalindromicTree
 		tree[sz] = node();
 		tree[sz].len = tree[suf].len + 2;
 		tree[suf].to[c] = sz++;
+		int cur = suf;
+		suf = sz - 1;
 		if (tree[suf].len == 1)
 		{
 			tree[suf].link = 1;
 			return true;
 		}
-		int cur = suf;
-		suf = sz - 1;
 		do
 		{
 			cur = tree[cur].link;
-		} while (pos - tree[cur].len - 1 >= 0 && s[pos] != s[pos - tree[cur].len - 1]);
-		tree[sz - 1].link = tree[cur].to[c];
+		} while (pos - tree[cur].len - 1 < 0 || s[pos] != s[pos - tree[cur].len - 1]);
+		tree[suf].link = tree[cur].to[c];
 		return true;
 	}
 	PalindromicTree()
