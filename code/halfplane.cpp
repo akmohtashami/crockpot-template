@@ -4,48 +4,44 @@
 
 using namespace std;
 
-typedef pair<int, int> point;
+typedef int T;
+typedef long long T2;
+typedef long long T4; // maybe int128_t 
+
+const int MAXLINES = 100 * 1000 + 10;
+const int INF = 20 * 1000 * 1000;
+
+typedef pair<T, T> point;
 typedef pair<point, point> line;
+
+// REPLACE ZERO WITH EPS FOR DOUBLE
 
 point operator - (const point &a, const point &b)
 {
 	return point(a.first - b.first, a.second - b.second);
 }
 
+
+T2 cross(point a, point b)
+{
+	return ((T2)a.first * b.second - (T2)a.second * b.first);
+}
+
 bool cmp(line a, line b)
 {
 	bool aa = a.first < a.second;
-	bool ab = b.first < b.second;
-	long long x = (long long)(a.second.second - a.first.second) * (b.second.first - b.first.first);
-	long long y = (long long)(b.second.second - b.first.second) * (a.second.first - a.first.first);
-	if (aa == ab)
+	bool bb = b.first < b.second;
+	if (aa == bb)
 	{
-		if (x == y)
-		{
-			if (aa)
-				return a.first < b.first;
-			else
-				return b.first < a.first;
-		}
+		point v1 = a.second - a.first;
+		point v2 = b.second - b.first;
+		if (cross(v1, v2) == 0)
+			return cross(b.second - b.first, a.first - b.first) > 0;
 		else
-			return x < y;
+			return cross(v1, v2) > 0;
 	}
 	else
 		return aa;
-}
-
-long long cross(point a, point b)
-{
-	return ((long long)a.first * b.second - (long long)a.second * b.first);
-}
-
-bool covers(line a, line b, line c)
-{
-	long long frac1_top = cross(b.first - a.first, b.second - b.first);
-	long long frac1_bot = cross(a.second - a.first, b.second - b.first);
-	long long frac2_top = cross(c.first - a.first, c.second - c.first);
-	long long frac2_bot = cross(a.second - a.first, c.second - c.first);
-	return frac2_top * frac1_bot < frac1_top * frac2_bot;
 }
 
 bool parallel(line a, line b)
@@ -53,43 +49,105 @@ bool parallel(line a, line b)
 	return cross(a.second - a.first, b.second - b.first) == 0;
 }
 
-vector<line> half_plane(vector<line> v)
+pair<T2, T2> alpha(line a, line b)
 {
-	sort(v.begin(), v.end(), cmp);
-	vector<line> st;
-	for (int i = 0; i < v.size(); i++)
+	return pair<T2, T2>(cross(b.first - a.first, b.second - b.first),
+						cross(a.second - a.first, b.second - b.first));
+}
+
+bool fcmp(T4 f1t, T4 f1b, T4 f2t, T4 f2b)
+{
+	if (f1b < 0)
 	{
-		while (st.size() > 1 && covers(st[st.size() - 2], st[st.size() - 1], v[i]))
-			st.pop_back();
-		if (st.size() > 0 && parallel(st.back(), v[i]) && (v[i].first < v[i].second || st.back().first >= st.back().second))
-			st.pop_back();
-		st.push_back(v[i]);
+		f1t *= -1;
+		f1b *= -1;
 	}
-	int f = 0;
-	while ((int)st.size() - f > 2)
+	if (f2b < 0)
 	{
-		if (covers(st[st.size() - 2], st[st.size() - 1], st[f]))
-			st.pop_back();
-		else if (covers(st[st.size() - 1], st[f], st[f + 1]))
-			f++;
+		f2t *= -1;
+		f2b *= -1;
+	}
+	return f1t * f2b < f2t * f1b; // check with eps
+}
+
+bool check(line a, line b, line c)
+{
+	bool crs = cross(c.second - c.first, a.second - a.first) > 0;
+	pair<T2, T2> a1 = alpha(a, b);
+	pair<T2, T2> a2 = alpha(a, c);
+	bool alp = fcmp(a1.first, a1.second, a2.first, a2.second);
+	return (crs ^ alp);
+}
+
+bool notin(line a, line b, line c) // is intersection of a and b in ccw direction of c?
+{
+	if (parallel(a, b))
+		return false;
+	if (parallel(a, c))
+		return cross(c.second - c.first, a.first - c.first) < 0;
+	if (parallel(b, c))
+		return cross(c.second - c.first, b.first - c.first) < 0;
+	return !(check(a, b, c) && check(b, a, c));
+}
+
+void print(vector<line> lines)
+{
+	cerr << " @ @ @ " << endl;
+	for (int i = 0; i < lines.size(); i++)
+		cerr << lines[i].first.first << " " << lines[i].first.second << " -> " << lines[i].second.first << " " << lines[i].second.second << endl;
+	cerr << " @ @ @ " << endl<< endl;
+}
+
+line dq[MAXLINES];
+
+vector<line> half_plane(vector<line> lines)
+{
+	lines.push_back(line(point(INF, -INF), point(INF, INF)));
+	lines.push_back(line(point(-INF, INF), point(-INF, -INF)));
+	lines.push_back(line(point(-INF, -INF), point(INF, -INF)));
+	lines.push_back(line(point(INF, INF), point(-INF, INF)));
+	sort(lines.begin(), lines.end(), cmp);
+	int ptr = 0;
+	for (int i = 0; i < lines.size(); i++)
+		if (i > 0 && 
+			(lines[i - 1].first < lines[i - 1].second) == (lines[i].first < lines[i].second) && 
+			parallel(lines[i - 1], lines[i]))
+			continue;
 		else
-			break;
-	}
-	if ((int)st.size() - f == 2)
+			lines[ptr++] = lines[i];
+	lines.resize(ptr);
+	if (lines.size() < 2)
+		return lines;
+	//print(lines);
+	int f = 0, e = 0;
+	dq[e++] = lines[0];
+	dq[e++] = lines[1];
+	for (int i = 2; i < lines.size(); i++)
 	{
-		if (parallel(st.back(), st[f]) == 0)
+		while (f < e - 1 && notin(dq[e - 2], dq[e - 1], lines[i]))
+			e--;
+		//print(vector<line>(dq + f, dq + e));
+		if (e == f + 1)
 		{
-			if (st[f].first > st.back().first)
-			{
-				st.clear();
-				return st;
-			}
+			T2 crs = cross(dq[f].second - dq[f].first, lines[i].second - lines[i].first) ;
+			if (crs < 0)
+				return vector<line>();
+			else if (crs == 0 && cross(lines[i].second - lines[i].first, dq[f].second - lines[i].first) < 0)
+				return vector<line>();
 		}
+		while (f < e - 1 && notin(dq[f], dq[f + 1], lines[i]))
+			f++;
+		dq[e++] = lines[i];
 	}
-	vector<line> st2;
-	for (int i = f; i < st.size(); i++)
-		st2.push_back(st[i]);
-	return st2;
+	while (f < e - 1 && notin(dq[e - 2], dq[e - 1], dq[f]))
+		e--;
+	while (f < e - 1 && notin(dq[f], dq[f + 1], dq[e - 1]))
+		f++;
+	vector<line> res;
+	res.resize(e - f);
+	for (int i = f; i < e; i++)
+		res[i - f] = dq[i];
+	return res;
 }
 
 
