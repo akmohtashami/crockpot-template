@@ -5,6 +5,7 @@ PointsInsidePolygon.txt	Number of integer points inside polygon
 halfplane.cpp	Half plane
 point-in-circle.cpp	Is this point in circle of other 3 points?
 rotating-caliper.cpp	Rotating Caliper
+Duality.tex	Duality and properties
 
 [Graph]
 edmonds.cpp	Maximum matching - Edmond's blossom
@@ -27,6 +28,7 @@ NumberOfPrimes.txt	Number of primes
 Factorials.txt	Factorials
 PowersOf3.txt	Powers of 3
 C_2n,n_.txt	C(2n,n)
+Combinatorics.pdf	Combinatorics
 
 [String]
 manacher.cpp	Manacher
