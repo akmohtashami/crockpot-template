@@ -21,6 +21,12 @@ EarDecomposition.txt	Ear decomposition
 simplex.cpp	LP simplex
 fft.cpp	FFT
 ntt.cpp	NTT
+ExtendedCatalan.tex	Extended catalan
+Stirling2.tex	Stirling 2
+NumberOfPrimes.txt	Number of primes
+Factorials.txt	Factorials
+PowersOf3.txt	Powers of 3
+C_2n,n_.txt	C(2n,n)
 
 [String]
 manacher.cpp	Manacher
