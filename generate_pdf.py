@@ -55,7 +55,7 @@ def get_tex(sections):
         for (filename, subsection_name) in subsections:
             tex += '\\subsection{%s}\n' % texify(subsection_name)
             if get_style(filename) == 'pdf':
-                tex += '\\includepdf{%s/%s}\n' % (code_dir, filename)
+                tex += '\\includepdf[pages=-,pagecommand={\pagestyle{fancy}}]{%s/%s}\n' % (code_dir, filename)
             elif get_style(filename) == 'tex':
                 tex += '\\input{%s/%s}\n' % (code_dir, filename)
             else:
