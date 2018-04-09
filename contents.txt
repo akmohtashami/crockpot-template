@@ -6,8 +6,8 @@ halfplane.cpp	Half plane
 point-in-circle.cpp	Is this point in circle of other 3 points?
 rotating-caliper.cpp	Rotating Caliper
 Duality.tex	Duality and properties
-delaunay.cpp	Delaunay(24n lg^2 n)
-stupid-delaunay.cpp	Stupid Delaunay(n^4)
+delaunay.cpp	Delaunay(24$nlg^2n$)
+stupid-delaunay.cpp	Stupid Delaunay($n^4$)
 
 [Graph]
 edmonds.cpp	Maximum matching - Edmond's blossom
