@@ -28,6 +28,7 @@ NumberOfPrimes.txt	Number of primes
 Factorials.txt	Factorials
 PowersOf3.txt	Powers of 3
 C_2n,n_.txt	C(2n,n)
+MostDivisor.txt	Most divisor
 Combinatorics.pdf	Combinatorics
 
 [String]
