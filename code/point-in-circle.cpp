@@ -9,6 +9,8 @@ typedef pair<int, int> point;
 // positive if d is inside it and 0 if it's on border
 int inCircle (point a, point b, point c, point d)
 {
+	if (cross(b - a, c - a) < 0)
+		swap(b, c);
 	int x[4][4] = {
 		1, a.first, a.second, a.first * a.first + a.second * a.second,
 		1, b.first, b.second, b.first * b.first + b.second * b.second,
