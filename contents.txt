@@ -4,9 +4,10 @@ ConvexHull3D.cpp	Convex hull 3D
 PointsInsidePolygon.txt	Number of integer points inside polygon
 halfplane.cpp	Half plane
 point-in-circle.cpp	Is this point in circle of other 3 points?
+rotating-caliper.cpp	Rotating Caliper
 
 [Graph]
-edmonds.cpp Maximum matching - Edmond's blossom
+edmonds.cpp	Maximum matching - Edmond's blossom
 bicon.cpp	Biconnected components
 gomory-hu.cpp	Gomory-hu
 dmst_mlogn.cpp	Directed minimum spanning tree (mlogn)
