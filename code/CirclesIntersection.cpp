@@ -96,13 +96,3 @@ public:
     return f(l, r, c2.r) + f(l, c2.r, r);
   }
 };
-
-int main() {
-  ld x1, y1, r1, x2, y2, r2;
-  cin>>x1>>y1>>r1>>x2>>y2>>r2;
-  circle a(r1, x1, y1);
-  circle b(r2, x2, y2);
-  pair<int, vector<point> > ans = a.intersect(b);
-  for(int i=0;i<ans.second.size();i++)
-    cout<<ans.second[i].x<<" "<<ans.second[i].y<<endl;
-} 
