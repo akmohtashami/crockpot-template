@@ -37,31 +37,31 @@ long long cross(point a, point b)
 {
 	return ((long long)a.first * b.second - (long long)a.second * b.first);
 }
+
+long long dot(point a, point b)
+{
+	return ((long long)a.first * b.first + (long long)a.second * b.second);
+}
 __int128 inCircle (point a, point b, point c, point d)
 {
 	if (cross(b - a, c - a) < 0)
 		swap(b, c);
-	__int128 x[4][4] = {
-		1, a.first, a.second, (long long)a.first * a.first + (long long)a.second * a.second,
-		1, b.first, b.second, (long long)b.first * b.first + (long long)b.second * b.second,
-		1, c.first, c.second, (long long)c.first * c.first + (long long)c.second * c.second,
-		1, d.first, d.second, (long long)d.first * d.first + (long long)d.second * d.second
-	};
-	// you can replace the following with any faster way
-	// of calculating determinant.
-	int y[] = {0, 1, 2, 3};
-	__int128 ans = 0;
-	do {
-		__int128 mul = 1;
-		for (int i = 0; i < 4; i++)
-			for (int j = i + 1; j < 4; j++)
-				if (y[i] > y[j])
-					mul *= -1;
-		for (int i = 0; i < 4; i++)
-			mul *= x[i][y[i]];
-		ans += mul;
-	} while (next_permutation(y, y + 4));
-	return ans;
+
+	__int128 x1 = b.first - a.first;
+	__int128 y1 = b.second - a.second;
+	__int128 z1 = dot(b, b) - dot(a, a);
+
+	__int128 x2 = c.first - a.first;
+	__int128 y2 = c.second - a.second;
+	__int128 z2 = dot(c, c) - dot(a, a);
+	// (ai + bj + ck) (di + ej + fk) = (ae - bd)k + (cd - af)j + (bf - ce)i
+	__int128 cx = y1 * z2 - z1 * y2;
+	__int128 cy = z1 * x2 - x1 * z2;
+	__int128 cz = x1 * y2 - y1 * x2;
+
+	__int128 res =  cx * (d.first - a.first) + cy * (d.second - a.second) + cz * (dot(d, d) - dot(a, a));
+	return res;
+
 }
 
 
@@ -121,7 +121,7 @@ struct Delaunay
 		remove_edge(t[v].c, t[v].a, v);
 	}
 
-	void relax_edge(int a, int b)
+	inline void relax_edge(const int &a, const int &b)
 	{
 		pii key(min(a, b), max(a, b));
 		set<pip>::iterator it = edges.lower_bound(pip(key, -1));
@@ -297,7 +297,7 @@ long double getRadius(pointD a, pointD b, pointD c)
 Delaunay d;
 int main()
 {
-	srand(1375);
+	srand(2018);
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 	int n;
