@@ -8,7 +8,7 @@ halfplane.cpp	Half plane
 point-in-circle.cpp	Is this point in circle of other 3 points?
 rotating-caliper.cpp	Rotating Caliper
 Duality.tex	Duality and properties
-delaunay.cpp	Delaunay(24$nlg^2n$)
+delaunay.cpp	Delaunay($nlg^2n$)
 stupid-delaunay.cpp	Stupid Delaunay($n^4$)
 
 [Graph]
@@ -37,7 +37,6 @@ Factorials.txt	Factorials
 PowersOf3.txt	Powers of 3
 C_2n,n_.txt	C(2n,n)
 MostDivisor.txt	Most divisor
-Combinatorics.pdf	Combinatorics
 
 [String]
 manacher.cpp	Manacher
@@ -46,3 +45,6 @@ z.cpp	Z function
 
 [Data structure]
 treap.cpp	Treap
+
+#[Cheatsheat]
+Combinatorics.pdf	Combinatorics

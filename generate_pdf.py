@@ -53,14 +53,16 @@ def get_tex(sections):
     for (section_name, subsections) in sections:
         tex += '\\section{%s}\n' % texify(section_name)
         for (filename, subsection_name) in subsections:
-            tex += '\\subsection{%s}\n' % texify(subsection_name)
+            if get_style(filename) != 'pdf':
+                tex += '\\subsection{%s}\n' % texify(subsection_name)
             if get_style(filename) == 'pdf':
                 tex += '\\includepdf[pages=-,pagecommand={\pagestyle{fancy}}]{%s/%s}\n' % (code_dir, filename)
             elif get_style(filename) == 'tex':
                 tex += '\\input{%s/%s}\n' % (code_dir, filename)
             else:
                 tex += '\\raggedbottom\\lstinputlisting[style=%s]{%s/%s}\n' % (get_style(filename), code_dir, filename)
-            tex += '\\hrulefill\n'
+            if get_style(filename) != 'pdf':
+                tex += '\\hrulefill\n'
         tex += '\n'
     return tex
 
