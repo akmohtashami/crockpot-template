@@ -30,6 +30,7 @@ stirling.cpp	Stirling 1
 Stirling2.tex	Stirling 2
 chinese_remainder.cpp	Chinese remainder
 PopularLP.tex	Popular LP
+LPDuality.tex	Duality of LP
 ExtendedCatalan.tex	Extended catalan
 Polynomial.tex	Find polynomial from it's points
 NumberOfPrimes.txt	Number of primes
