@@ -29,6 +29,7 @@ ntt.cpp	NTT
 stirling.cpp	Stirling 1
 Stirling2.tex	Stirling 2
 chinese_remainder.cpp	Chinese remainder
+PopularLP.tex	Popular LP
 ExtendedCatalan.tex	Extended catalan
 NumberOfPrimes.txt	Number of primes
 Factorials.txt	Factorials
