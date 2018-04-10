@@ -1,5 +1,7 @@
 [Geometry]
 intersection.cpp	Line intersection
+LineCircleIntersection.cpp	Line and circle intersection
+CirclesIntersection.cpp	Intersection of 2 circle
 ConvexHull3D.cpp	Convex hull 3D
 PointsInsidePolygon.txt	Number of integer points inside polygon
 halfplane.cpp	Half plane
